@@ -1,0 +1,34 @@
+[tool.poetry]
+name = "s1-sae-reasoning"
+version = "0.1.0"
+description = "Identifying and improving reasoning features in LLMs using Sparse Autoencoders"
+readme = "README.md"
+authors = [
+    "Tetiana Bas <tetiana@uni.minerva.edu>",
+    "Krystian Novak <krystian@uni.minerva.edu>"
+]
+license = "MIT"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+packages = [{include = "s1_sae_reasoning", from = "src"}]
+
+[tool.poetry.dependencies]
+python = ">=3.8"
+torch = ">=2.0.0"
+numpy = ">=1.24.0"
+matplotlib = ">=3.7.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
+target-version = ["py38"]
+
+[tool.isort]
+profile = "black"
+line_length = 88
