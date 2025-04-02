@@ -16,10 +16,14 @@ classifiers = [
 packages = [{include = "s1_sae_reasoning", from = "src"}]
 
 [tool.poetry.dependencies]
-python = ">=3.8"
-torch = ">=2.0.0"
-numpy = ">=1.24.0"
+python = ">=3.9.0,<4.0"
+transformers = "^4.50.3"
+torch = "^2.0.0"
+numpy = "^1.24.0"
+tqdm = "^4.66.0"
+transformer_lens = {version = "^1.11.0", python = ">=3.9.0,<4.0"}
 matplotlib = ">=3.7.0"
+typeguard = "^4.4.2"
 
 [build-system]
 requires = ["poetry-core"]
