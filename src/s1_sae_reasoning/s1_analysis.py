@@ -1,5 +1,6 @@
 import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModelForCausalLM, AutoConfig
+from transformer_lens.HookedTransformerConfig import HookedTransformerConfig
 import os
 
 class S1Model:
@@ -19,6 +20,23 @@ class S1Model:
         self.cache_dir = cache_dir
         os.makedirs(cache_dir, exist_ok=True)
         
+        # First load HF config to get model parameters
+        self.hf_config = AutoConfig.from_pretrained(model_name)
+        
+        # Create HookedTransformer config from HF config
+        self.config = HookedTransformerConfig(
+            n_layers=self.hf_config.num_hidden_layers,
+            d_model=self.hf_config.hidden_size,
+            n_ctx=self.hf_config.max_position_embeddings,
+            d_head=self.hf_config.hidden_size // self.hf_config.num_attention_heads,
+            model_name=model_name,
+            n_heads=self.hf_config.num_attention_heads,
+            act_fn=self.hf_config.hidden_act.lower(),
+            d_vocab=self.hf_config.vocab_size,
+            device=self.device,
+            dtype=torch.float16
+        )
+
         # Load or create cached model
         self.tokenizer, self.model = self._load_or_cache_model()
         
